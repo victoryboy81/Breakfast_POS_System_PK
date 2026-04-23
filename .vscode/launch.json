@@ -1,0 +1,16 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": ".NET Core Launch (WinExe)",
+            "type": "coreclr",
+            "request": "launch",
+            "preLaunchTask": "build", // 確保執行前先編譯
+            "program": "${workspaceFolder}/bin/Debug/net10.0-windows/購物車.exe", // 指向你的 exe
+            "args": [],
+            "cwd": "${workspaceFolder}", // 工作目錄
+            "stopAtEntry": false,
+            "console": "internalConsole"
+        }
+    ]
+}
