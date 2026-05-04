@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("早餐店銷售管理系統")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+6b35dece6ea23b63c98bfb24345b68987866f313")]
 [assembly: System.Reflection.AssemblyProductAttribute("早餐店銷售管理系統")]
 [assembly: System.Reflection.AssemblyTitleAttribute("早餐店銷售管理系統")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

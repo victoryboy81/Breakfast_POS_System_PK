@@ -971,11 +971,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\49927\\Desktop\\vscode_project\\dotnet10\\project\\winform\\早餐店銷售管理系統\\V1.3\\早餐店銷售管理系統\\早餐店銷售管理系統.csproj",
+      "projectUniqueName": "C:\\Users\\49927\\Desktop\\vscode_project\\dotnet10\\project\\winform\\早餐店銷售管理系統\\V1.6\\早餐店銷售管理系統\\早餐店銷售管理系統.csproj",
       "projectName": "早餐店銷售管理系統",
-      "projectPath": "C:\\Users\\49927\\Desktop\\vscode_project\\dotnet10\\project\\winform\\早餐店銷售管理系統\\V1.3\\早餐店銷售管理系統\\早餐店銷售管理系統.csproj",
+      "projectPath": "C:\\Users\\49927\\Desktop\\vscode_project\\dotnet10\\project\\winform\\早餐店銷售管理系統\\V1.6\\早餐店銷售管理系統\\早餐店銷售管理系統.csproj",
       "packagesPath": "C:\\Users\\49927\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\49927\\Desktop\\vscode_project\\dotnet10\\project\\winform\\早餐店銷售管理系統\\V1.3\\早餐店銷售管理系統\\obj\\",
+      "outputPath": "C:\\Users\\49927\\Desktop\\vscode_project\\dotnet10\\project\\winform\\早餐店銷售管理系統\\V1.6\\早餐店銷售管理系統\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

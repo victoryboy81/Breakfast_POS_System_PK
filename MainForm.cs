@@ -28,9 +28,13 @@ namespace BreakfastCart
         private DataTable custdt = new DataTable();
         private DataTable ordermasterdt = new DataTable();
         private DataTable orderdetaildt = new DataTable();
+        private DataTable orderinfodt = new DataTable();
+        private DataTable tempdt = new DataTable();
         private List<Customer> custitems;
         private List<SalesMaster> ordermasteritems;
         private List<SalesDetail> orderdetailitems;
+        private List<SalesInfo> orderinfoitems;
+        private BindingSource orderinfobs;
         private BindingSource custbs;
         private BindingSource ordermasterbs;
         private BindingSource orderdetailbs;
@@ -46,6 +50,8 @@ namespace BreakfastCart
         private int ordermasterItemssortflag = 0;
         private int orderdetailItemssortflag = 0;
         private int cartItemssortflag = 0;
+        private int orderinfoflag = 0;
+        private int orderstatus = 0;
 
         public MainForm()
         {
@@ -53,6 +59,7 @@ namespace BreakfastCart
             custitems = new List<Customer>();
             ordermasteritems = new List<SalesMaster>();
             orderdetailitems = new List<SalesDetail>();
+            orderinfoitems = new List<SalesInfo>();
             currentOrder = new Order();
             currentOrder.DiscountRate = 1.0m;
             allMenuItems = new BindingList<MenuItem>();
@@ -145,6 +152,7 @@ namespace BreakfastCart
                     }
                 }
             }
+            //orderindex = ordermastercount;
             //讀取資料庫訂單主檔筆數
             //cmd.Parameters.Clear();
             sql = @"SELECT COUNT(*) FROM SalesDetail ;";
@@ -402,7 +410,67 @@ namespace BreakfastCart
             }
 
 
+
+            orderinfobs = new BindingSource();
+            orderinfobs.DataSource = orderinfoitems;
+            dataGridView1.DataSource = orderinfobs;
+            if (dataGridView1.Columns.Contains("CustomerID"))
+            {
+                dataGridView1.Columns["CustomerID"].Visible = false; // 隱藏欄位，但資料還在
+            }
+            if (dataGridView1.Columns.Contains("ProductID"))
+            {
+                dataGridView1.Columns["ProductID"].Visible = false; // 隱藏欄位，但資料還在
+            }
+            if (dataGridView1.Columns.Contains("TotalQuantity"))
+            {
+                dataGridView1.Columns["TotalQuantity"].Visible = false; // 隱藏欄位，但資料還在
+            }
+            if (dataGridView1.Columns.Contains("TotalAmount"))
+            {
+                dataGridView1.Columns["TotalAmount"].Visible = false; // 隱藏欄位，但資料還在
+            }
+            if (dataGridView1.Columns.Contains("DetailID"))
+            {
+                dataGridView1.Columns["DetailID"].HeaderText = "訂單明細序號"; // 隱藏欄位，但資料還在
+            }
+            if (dataGridView1.Columns.Contains("SaleID"))
+            {
+                dataGridView1.Columns["SaleID"].HeaderText = "訂單編號"; // 隱藏欄位，但資料還在
+            }
+            if (dataGridView1.Columns.Contains("CustomerName"))
+            {
+                dataGridView1.Columns["CustomerName"].HeaderText = "客戶名稱"; // 隱藏欄位，但資料還在
+            }
+            if (dataGridView1.Columns.Contains("ProductName"))
+            {
+                dataGridView1.Columns["ProductName"].HeaderText = "品項"; // 隱藏欄位，但資料還在
+            }
+            if (dataGridView1.Columns.Contains("Quantity"))
+            {
+                dataGridView1.Columns["Quantity"].HeaderText = "數量"; // 隱藏欄位，但資料還在
+            }
+            if (dataGridView1.Columns.Contains("UnitPrice"))
+            {
+                dataGridView1.Columns["UnitPrice"].HeaderText = "當時單價"; // 隱藏欄位，但資料還在
+            }
+            if (dataGridView1.Columns.Contains("SubTotal"))
+            {
+                dataGridView1.Columns["SubTotal"].HeaderText = "小結總和"; // 隱藏欄位，但資料還在
+            }
+            if (dataGridView1.Columns.Contains("SaleDate"))
+            {
+                dataGridView1.Columns["SaleDate"].HeaderText = "下單日期"; // 隱藏欄位，但資料還在
+            }
+
+
+
+
+
+
+
             // 調整 DataGridView 欄位顯示
+            ConfigureGrid(dataGridView1);
             ConfigureGrid(orderdetaildgv);
             ConfigureGrid(ordermasterdgv);
             ConfigureGrid(custdgv);
@@ -1439,6 +1507,7 @@ namespace BreakfastCart
             orderdetailcustIDsearchtxt.Text = "";
             searchtxt.Text = "";
             txtSearch.Text = "";
+            textBox11.Text = "";
             if (tabControl1.SelectedTab.Name == "Tab_MemberVIP")
             {
                 //MessageBox.Show("1");
@@ -1546,6 +1615,63 @@ namespace BreakfastCart
                     }
                 }
 
+            }
+            else if (tabControl1.SelectedTab.Name == "Tab_OrderCreate")
+            {
+                //MessageBox.Show("3");
+                string sql = @"SELECT [DetailID] 訂單明細序號,
+                                          [dbo].[SalesDetail].[SaleID] 訂單編號,
+                                          [dbo].[SalesMaster].[CustomerID] 客戶編號,
+                                          [dbo].[Customers].CustomerName 客戶名稱,
+                                          [dbo].[SalesDetail].[ProductID] 產品序號,
+                                          [ProductName] 品項,
+                                          [Quantity] 數量,
+                                          [dbo].[SalesDetail].[UnitPrice] 當時單價,
+                                          [SubTotal] 小計總和,
+                                          [SaleDate] 下單日期,
+                                          [TotalQuantity] 總數量,
+                                          [TotalAmount] 總金額 FROM [dbo].[SalesDetail]
+                                          LEFT JOIN [dbo].[SalesMaster] ON [dbo].[SalesDetail].[SaleID] =[dbo].[SalesMaster].[SaleID]
+                                          LEFT JOIN [dbo].[Products] ON [dbo].[SalesDetail].ProductID =[dbo].[Products].ProductID
+                                          LEFT JOIN [dbo].[Customers] ON [dbo].[SalesMaster].[CustomerID] =[dbo].[Customers].CustomerID ;";
+                using (cnn = new SqlConnection(connectionString))
+                {
+                    using (cmd = new SqlCommand(sql, cnn))
+                    {
+                        orderinfodt.Clear();
+                        adapter = new SqlDataAdapter(cmd);
+                        countline = adapter.Fill(orderinfodt);
+                        //MessageBox.Show($"{countline}");
+                        if (countline > 0)
+                        {
+                            orderinfoitems = orderinfodt.AsEnumerable().Select(row => new SalesInfo
+                            {
+                                DetailID = row.Field<int>("訂單明細序號"),
+                                SaleID = row.Field<int>("訂單編號"),
+                                CustomerID = row.Field<int>("客戶編號"),
+                                CustomerName = row.Field<string>("客戶名稱"),
+                                ProductID = row.Field<int>("產品序號"),
+                                ProductName = row.Field<string>("品項"),
+                                Quantity = row.Field<int>("數量"),
+                                UnitPrice = row.Field<decimal>("當時單價"),
+                                SubTotal = row.Field<decimal>("小計總和"),
+                                SaleDate = row.Field<DateTime>("下單日期"),
+                                TotalQuantity = row.Field<int>("總數量"),
+                                TotalAmount = row.Field<decimal>("總金額")
+
+                            }).ToList();
+                            //MessageBox.Show($"{ordermasteritems}");
+                            orderinfobs.DataSource = orderinfoitems;
+                            orderinfobs.ResetBindings(false);
+                        }
+                        else
+                        {
+
+                            MessageBox.Show("查無產品資料");
+                        }
+                        //dt = ds.Tables["Products"];
+                    }
+                }
             }
 
         }
@@ -2503,7 +2629,8 @@ namespace BreakfastCart
                         }).ToList();
                         foreach (var item in custitems)
                         {
-                            if (item.customerID != 0) {
+                            if (item.customerID != 0)
+                            {
                                 custIDtemp = item.customerID;
                                 showVIPmessiagelab.Text = $"~~~~歡迎尊貴VIP會員 {item.CustomerName}先生/女士~~~~";
                             }
@@ -2528,6 +2655,817 @@ namespace BreakfastCart
             {
                 custIDtemp = 0;
                 showVIPmessiagelab.Text = $"目前身分非會員";
+            }
+        }
+
+        private void textBox13_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void dataGridView1_CurrentCellChanged(object sender, EventArgs e)
+        {
+
+            SalesInfo selectedItem = dataGridView1.CurrentRow?.DataBoundItem as SalesInfo;
+            if (selectedItem == null)
+            {
+
+                return;
+            }
+
+            textBox1.Text = selectedItem.SaleID.ToString();
+            textBox2.Text = selectedItem.CustomerID.ToString();
+            textBox3.Text = selectedItem.SaleDate.ToString();
+            textBox10.Text = selectedItem.CustomerName;
+            textBox4.Text = selectedItem.DetailID.ToString();
+            textBox5.Text = selectedItem.ProductID.ToString();
+            textBox8.Text = selectedItem.ProductName;
+            textBox6.Text = selectedItem.UnitPrice.ToString();
+            textBox9.Text = selectedItem.SubTotal.ToString();
+            textBox12.Text = selectedItem.Quantity.ToString();
+            textBox13.Text = selectedItem.TotalQuantity.ToString();
+            textBox14.Text = selectedItem.TotalAmount.ToString();
+        }
+
+        private void textBox11_TextChanged(object sender, EventArgs e)
+        {
+
+            var keyword = textBox11.Text.ToLower();
+
+            int countline = 0;
+
+            if (textBox11.Text.ToLower() != "" && int.TryParse(keyword, out _))
+            {
+
+                string sql = @"SELECT [DetailID] 訂單明細序號,
+                                          [dbo].[SalesDetail].[SaleID] 訂單編號,
+                                          [dbo].[SalesMaster].[CustomerID] 客戶編號,
+                                          [dbo].[Customers].CustomerName 客戶名稱,
+                                          [dbo].[SalesDetail].[ProductID] 產品序號,
+                                          [ProductName] 品項,
+                                          [Quantity] 數量,
+                                          [dbo].[SalesDetail].[UnitPrice] 當時單價,
+                                          [SubTotal] 小計總和,
+                                          [SaleDate] 下單日期,
+                                          [TotalQuantity] 總數量,
+                                          [TotalAmount] 總金額 FROM [dbo].[SalesDetail]
+                                          LEFT JOIN [dbo].[SalesMaster] ON [dbo].[SalesDetail].[SaleID] =[dbo].[SalesMaster].[SaleID]
+                                          LEFT JOIN [dbo].[Products] ON [dbo].[SalesDetail].ProductID =[dbo].[Products].ProductID
+                                          LEFT JOIN [dbo].[Customers] ON [dbo].[SalesMaster].[CustomerID] =[dbo].[Customers].CustomerID
+                                          WHERE [dbo].[SalesMaster].SaleID = @SaleID;";
+                using (cnn = new SqlConnection(connectionString))
+                {
+                    using (cmd = new SqlCommand(sql, cnn))
+                    {
+
+                        cmd.Parameters.Add(new SqlParameter("@SaleID", SqlDbType.Int));
+                        cmd.Parameters["@SaleID"].Value = keyword;
+
+                        orderinfodt.Clear();
+                        adapter = new SqlDataAdapter(cmd);
+                        countline = adapter.Fill(orderinfodt);
+
+                        orderinfoitems = orderinfodt.AsEnumerable().Select(row => new SalesInfo
+                        {
+                            DetailID = row.Field<int>("訂單明細序號"),
+                            SaleID = row.Field<int>("訂單編號"),
+                            CustomerID = row.Field<int>("客戶編號"),
+                            CustomerName = row.Field<string>("客戶名稱"),
+                            ProductID = row.Field<int>("產品序號"),
+                            ProductName = row.Field<string>("品項"),
+                            Quantity = row.Field<int>("數量"),
+                            UnitPrice = row.Field<decimal>("當時單價"),
+                            SubTotal = row.Field<decimal>("小計總和"),
+                            SaleDate = row.Field<DateTime>("下單日期"),
+                            TotalQuantity = row.Field<int>("總數量"),
+                            TotalAmount = row.Field<decimal>("總金額")
+
+                        }).ToList();
+                        orderinfobs.DataSource = orderinfoitems;
+                        orderinfobs.ResetBindings(false);
+
+
+                    }
+                }
+            }
+            else
+            {
+                if (!int.TryParse(keyword, out _) && keyword != "")
+                {
+                    MessageBox.Show("請輸入整數");
+                }
+                string sql = @"SELECT [DetailID] 訂單明細序號,
+                                          [dbo].[SalesDetail].[SaleID] 訂單編號,
+                                          [dbo].[SalesMaster].[CustomerID] 客戶編號,
+                                          [dbo].[Customers].CustomerName 客戶名稱,
+                                          [dbo].[SalesDetail].[ProductID] 產品序號,
+                                          [ProductName] 品項,
+                                          [Quantity] 數量,
+                                          [dbo].[SalesDetail].[UnitPrice] 當時單價,
+                                          [SubTotal] 小計總和,
+                                          [SaleDate] 下單日期,
+                                          [TotalQuantity] 總數量,
+                                          [TotalAmount] 總金額 FROM [dbo].[SalesDetail]
+                                          LEFT JOIN [dbo].[SalesMaster] ON [dbo].[SalesDetail].[SaleID] =[dbo].[SalesMaster].[SaleID]
+                                          LEFT JOIN [dbo].[Products] ON [dbo].[SalesDetail].ProductID =[dbo].[Products].ProductID
+                                          LEFT JOIN [dbo].[Customers] ON [dbo].[SalesMaster].[CustomerID] =[dbo].[Customers].CustomerID;";
+                using (cnn = new SqlConnection(connectionString))
+                {
+                    using (cmd = new SqlCommand(sql, cnn))
+                    {
+                        //cmd.Parameters.Add(new SqlParameter("@CustomerID", SqlDbType.NVarChar));
+                        //cmd.Parameters["@CustomerID"].Value = keyword;
+
+                        orderinfodt.Clear();
+                        adapter = new SqlDataAdapter(cmd);
+                        countline = adapter.Fill(orderinfodt);
+
+                        orderinfoitems = orderinfodt.AsEnumerable().Select(row => new SalesInfo
+                        {
+                            DetailID = row.Field<int>("訂單明細序號"),
+                            SaleID = row.Field<int>("訂單編號"),
+                            CustomerID = row.Field<int>("客戶編號"),
+                            CustomerName = row.Field<string>("客戶名稱"),
+                            ProductID = row.Field<int>("產品序號"),
+                            ProductName = row.Field<string>("品項"),
+                            Quantity = row.Field<int>("數量"),
+                            UnitPrice = row.Field<decimal>("當時單價"),
+                            SubTotal = row.Field<decimal>("小計總和"),
+                            SaleDate = row.Field<DateTime>("下單日期"),
+                            TotalQuantity = row.Field<int>("總數量"),
+                            TotalAmount = row.Field<decimal>("總金額")
+
+                        }).ToList();
+                        orderinfobs.DataSource = orderinfoitems;
+                        orderinfobs.ResetBindings(false);
+
+                    }
+                }
+            }
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+
+            if (orderinfoflag == 0)
+            {
+                // 1. 使用 LINQ 對原本的資料進行排序
+                var sortedList = orderinfoitems.OrderByDescending(x => x.DetailID).ToList();
+                // 2. 清空原本的 BindingList 並重新加入排序後的資料
+
+                orderinfoitems.Clear();
+                foreach (var item in sortedList)
+                {
+                    orderinfoitems.Add(item);
+                }
+
+                // 3. 通知 UI 更新
+
+                orderinfobs.ResetBindings(false);
+                orderinfoflag = 1;
+            }
+            else if (orderinfoflag == 1)
+            {
+                // 1. 使用 LINQ 對原本的資料進行排序
+                var sortedList = orderinfoitems.OrderBy(x => x.DetailID).ToList();
+                // 2. 清空原本的 BindingList 並重新加入排序後的資料
+
+                orderinfoitems.Clear();
+                foreach (var item in sortedList)
+                {
+                    orderinfoitems.Add(item);
+                }
+
+
+                orderinfobs.ResetBindings(false);
+                orderinfoflag = 0;
+            }
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+
+            int rowsAffected = 0;
+            int keycount = -1;
+            int keyflag = 0;
+
+            try  //使用try...catch...敘述來補捉異動資料可能發生的例外 
+            {
+                //MessageBox.Show($"新增:{connectionString}");
+                using (cnn = new SqlConnection(connectionString))
+                {
+                    string sql = @"DELETE FROM SalesDetail  WHERE DetailID = @DetailID";
+                    using (cmd = new SqlCommand(sql, cnn))
+                    {
+
+                        cmd.CommandText = sql;
+                        cmd.Parameters.Add(new SqlParameter("@DetailID", SqlDbType.Int));
+                        cmd.Parameters["@DetailID"].Value = textBox4.Text.Trim();
+
+                        cnn.Open();
+                        rowsAffected = cmd.ExecuteNonQuery();
+                        //cnn.Close();
+                    }
+                }
+                /*
+                if (rowsAffected > 0)
+                {
+                    MessageBox.Show("刪除資料成功");
+                }
+                else
+                {
+                    MessageBox.Show("找不到該筆資料，未進行任何更新。");
+                }*/
+                //custitems.Add(new Customer { CustomerName = custnametxt.Text.Trim(), Region = regioncombo.Text.Trim(), PaymentMethods = paycombo.Text.Trim() });
+                SalesInfo selectedItem = dataGridView1.CurrentRow?.DataBoundItem as SalesInfo;
+                int index = 0;
+
+                if (dataGridView1.CurrentRow != null && dataGridView1.CurrentRow.Index >= 0)
+                {
+                    /*
+                    for (int i = 0; i < custitems.Count; i++)
+                    {
+                        if (custitems[i].customerID == selectedItem.customerID)
+                        {
+                            index = i;
+                            break;
+                        }
+                    }
+                    */
+                    orderinfoitems.Remove(selectedItem);
+                    orderdetailcount--;
+                    keycount = orderinfoitems.Where(x => x.SaleID == int.Parse(textBox1.Text.Trim())).Count();
+                    if (keycount == 0) { keyflag = 1; }
+                }
+                //orderinfobs.ResetBindings(false);
+                if (keyflag == 1)
+                {
+                    keyflag = 0;
+
+
+                    using (cnn = new SqlConnection(connectionString))
+                    {
+                        string sql = "DELETE FROM SalesMaster  WHERE SaleID = @SaleID";
+                        using (cmd = new SqlCommand(sql, cnn))
+                        {
+
+                            cmd.CommandText = sql;
+                            cmd.Parameters.Add(new SqlParameter("@SaleID", SqlDbType.Int));
+                            cmd.Parameters["@SaleID"].Value = textBox1.Text.Trim();
+
+                            cnn.Open();
+                            rowsAffected = cmd.ExecuteNonQuery();
+                            //cnn.Close();
+                        }
+                    }
+
+                    if (rowsAffected > 0)
+                    {
+                        MessageBox.Show("訂單單號已完成刪除資料");
+                    }
+                    else
+                    {
+                        MessageBox.Show("找不到該筆資料，未進行任何更新。");
+                    }
+                    //custitems.Add(new Customer { CustomerName = custnametxt.Text.Trim(), Region = regioncombo.Text.Trim(), PaymentMethods = paycombo.Text.Trim() });
+                    //SalesMaster selectedItem = ordermasterdgv.CurrentRow?.DataBoundItem as SalesMaster;
+                    //int index = 0;
+
+                    // if (ordermasterdgv.CurrentRow != null && ordermasterdgv.CurrentRow.Index >= 0)
+                    // {
+                    /*
+                    for (int i = 0; i < custitems.Count; i++)
+                    {
+                        if (custitems[i].customerID == selectedItem.customerID)
+                        {
+                            index = i;
+                            break;
+                        }
+                    }
+                    */
+                    //ordermasteritems.Remove(selectedItem);
+                    ordermastercount--;
+                    // }
+                    //orderinfobs.ResetBindings(false);
+                    //ordermasterbs.ResetBindings(false);
+                }
+                orderinfobs.ResetBindings(false);
+            }
+            catch (Exception ex)
+            {
+                cnn.Close();
+                MessageBox.Show(ex.Message + ", 更新資料發生錯誤");
+            }
+            finally
+            {
+                cmd.Parameters.Clear();
+            }
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+
+            int rowsAffected = 0;
+
+            try  //使用try...catch...敘述來補捉異動資料可能發生的例外 
+            {
+                //MessageBox.Show($"新增:{connectionString}");
+                using (cnn = new SqlConnection(connectionString))
+                {
+                    string sql = "UPDATE SalesMaster SET  CustomerID =@CustomerID, SaleDate =@SaleDate,TotalAmount=@TotalAmount,TotalQuantity=@TotalQuantity WHERE SaleID = @SaleID";
+                    using (cmd = new SqlCommand(sql, cnn))
+                    {
+
+                        cmd.CommandText = sql;
+                        cmd.Parameters.Add(new SqlParameter("@SaleID", SqlDbType.Int));
+                        cmd.Parameters["@SaleID"].Value = textBox1.Text.Trim();
+                        cmd.Parameters.Add(new SqlParameter("@CustomerID", SqlDbType.Int));
+                        cmd.Parameters["@CustomerID"].Value = textBox2.Text.Trim();
+                        cmd.Parameters.Add(new SqlParameter("@SaleDate", SqlDbType.DateTime));
+                        cmd.Parameters["@SaleDate"].Value = textBox3.Text.Trim();
+                        cmd.Parameters.Add(new SqlParameter("@TotalAmount", SqlDbType.Decimal));
+                        cmd.Parameters["@TotalAmount"].Value = textBox14.Text.Trim();
+                        cmd.Parameters.Add(new SqlParameter("@TotalQuantity", SqlDbType.Int));
+                        cmd.Parameters["@TotalQuantity"].Value = textBox13.Text.Trim();
+
+                        cnn.Open();
+                        rowsAffected = cmd.ExecuteNonQuery();
+                        //cnn.Close();
+                    }
+                }
+                /*
+                if (rowsAffected > 0)
+                {
+                    MessageBox.Show("更新資料成功");
+                }
+                else
+                {
+                    MessageBox.Show("找不到該筆資料，未進行任何更新。");
+                }*/
+                //custitems.Add(new Customer { CustomerName = custnametxt.Text.Trim(), Region = regioncombo.Text.Trim(), PaymentMethods = paycombo.Text.Trim() });
+                SalesInfo selectedItem = dataGridView1.CurrentRow?.DataBoundItem as SalesInfo;
+                int index = 0;
+
+                if (dataGridView1.CurrentRow != null && dataGridView1.CurrentRow.Index >= 0)
+                {
+                    for (int i = 0; i < orderinfoitems.Count; i++)
+                    {
+                        if (orderinfoitems[i].SaleID == selectedItem.SaleID)
+                        {
+                            index = i;
+
+                            orderinfoitems[index].CustomerID = Convert.ToInt32(textBox2.Text.Trim());
+                            orderinfoitems[index].SaleDate = Convert.ToDateTime(textBox3.Text.Trim());
+                            orderinfoitems[index].TotalAmount = Convert.ToDecimal(textBox14.Text.Trim());
+                            orderinfoitems[index].TotalQuantity = Convert.ToInt32(textBox13.Text.Trim());
+                            orderinfoitems[index].CustomerName = textBox10.Text.Trim();
+
+                            //break;
+                        }
+                    }
+
+
+                }
+
+
+                ////
+
+                using (cnn = new SqlConnection(connectionString))
+                {
+                    string sql = "UPDATE SalesDetail SET   ProductID =@ProductID,Quantity=@Quantity,UnitPrice=@UnitPrice,SubTotal=@SubTotal WHERE DetailID = @DetailID";
+                    using (cmd = new SqlCommand(sql, cnn))
+                    {
+
+                        cmd.CommandText = sql;
+                        cmd.Parameters.Add(new SqlParameter("@DetailID", SqlDbType.Int));
+                        cmd.Parameters["@DetailID"].Value = textBox4.Text.Trim();
+                        //cmd.Parameters.Add(new SqlParameter("@SaleID", SqlDbType.Int));
+                        //cmd.Parameters["@SaleID"].Value = textBox1.Text.Trim();
+                        cmd.Parameters.Add(new SqlParameter("@ProductID", SqlDbType.Int));
+                        cmd.Parameters["@ProductID"].Value = textBox5.Text.Trim();
+                        cmd.Parameters.Add(new SqlParameter("@Quantity", SqlDbType.Int));
+                        cmd.Parameters["@Quantity"].Value = textBox12.Text.Trim();
+                        cmd.Parameters.Add(new SqlParameter("@UnitPrice", SqlDbType.Decimal));
+                        cmd.Parameters["@UnitPrice"].Value = textBox6.Text.Trim();
+                        cmd.Parameters.Add(new SqlParameter("@SubTotal", SqlDbType.Decimal));
+                        cmd.Parameters["@SubTotal"].Value = textBox9.Text.Trim();
+
+                        cnn.Open();
+                        rowsAffected = cmd.ExecuteNonQuery();
+                        //cnn.Close();
+                    }
+                }
+
+                if (rowsAffected > 0)
+                {
+                    MessageBox.Show("訂單已完成全部更新資料");
+                }
+                else
+                {
+                    MessageBox.Show("找不到該筆資料，未進行任何更新。");
+                }
+                //custitems.Add(new Customer { CustomerName = custnametxt.Text.Trim(), Region = regioncombo.Text.Trim(), PaymentMethods = paycombo.Text.Trim() });
+                //SalesInfo selectedItem = dataGridView1.CurrentRow?.DataBoundItem as SalesInfo;
+                //int index = 0;
+
+                if (dataGridView1.CurrentRow != null && dataGridView1.CurrentRow.Index >= 0)
+                {
+                    for (int i = 0; i < orderinfoitems.Count; i++)
+                    {
+                        if (orderinfoitems[i].DetailID == selectedItem.DetailID)
+                        {
+                            index = i;
+                            break;
+                        }
+                    }
+
+                    //orderinfoitems[index].SaleID = Convert.ToInt32(textBox1.Text.Trim());
+                    orderinfoitems[index].ProductID = Convert.ToInt32(textBox5.Text.Trim());
+                    orderinfoitems[index].Quantity = Convert.ToInt32(textBox12.Text.Trim());
+                    orderinfoitems[index].UnitPrice = Convert.ToDecimal(textBox6.Text.Trim());
+                    orderinfoitems[index].SubTotal = Convert.ToDecimal(textBox9.Text.Trim());
+                    orderinfoitems[index].ProductName = textBox8.Text.Trim();
+                }
+
+
+                ///
+
+
+                orderinfobs.ResetBindings(false);
+
+
+            }
+            catch (Exception ex)
+            {
+                cnn.Close();
+                MessageBox.Show(ex.Message + ", 更新資料發生錯誤");
+            }
+            finally
+            {
+                cmd.Parameters.Clear();
+            }
+        }
+
+        private void textBox2_TextChanged(object sender, EventArgs e)
+        {
+            int countline = 0;
+            List<SalesInfo> templist;
+            string sql = @"SELECT 
+                                       [dbo].[Customers].CustomerName 客戶名稱
+                                       FROM [dbo].[SalesDetail]
+                                       LEFT JOIN [dbo].[SalesMaster] ON [dbo].[SalesDetail].[SaleID] =[dbo].[SalesMaster].[SaleID]
+                                       LEFT JOIN [dbo].[Products] ON [dbo].[SalesDetail].ProductID =[dbo].[Products].ProductID
+                                       LEFT JOIN [dbo].[Customers] ON [dbo].[SalesMaster].[CustomerID] =[dbo].[Customers].CustomerID
+                                        WHERE [dbo].[SalesMaster].CustomerID=@CustomerID;";
+            using (cnn = new SqlConnection(connectionString))
+            {
+                using (cmd = new SqlCommand(sql, cnn))
+                {
+                    if (textBox2.Text.Trim() != "")
+                    {
+                        cmd.Parameters.Add(new SqlParameter("@CustomerID", SqlDbType.Int));
+                        cmd.Parameters["@CustomerID"].Value = textBox2.Text.Trim();
+
+
+                        tempdt.Clear();
+                        adapter = new SqlDataAdapter(cmd);
+                        countline = adapter.Fill(tempdt);
+                        if (countline > 0)
+                        {
+                            templist = tempdt.AsEnumerable().Select(row => new SalesInfo
+                            {
+
+                                CustomerName = row.Field<string>("客戶名稱"),
+
+
+                            }).ToList();
+                            textBox10.Text = templist[0].CustomerName;
+                        }
+                        else
+                        {
+                            textBox10.Text = "";
+                        }
+                    }
+                }
+            }/**/
+        }
+
+        private void textBox5_TextChanged(object sender, EventArgs e)
+        {
+
+            int countline = 0;
+            List<SalesInfo> templist;
+            string sql = @"SELECT 
+                                       [ProductName] 品項
+                                       FROM [dbo].[SalesDetail]
+                                       LEFT JOIN [dbo].[SalesMaster] ON [dbo].[SalesDetail].[SaleID] =[dbo].[SalesMaster].[SaleID]
+                                       LEFT JOIN [dbo].[Products] ON [dbo].[SalesDetail].ProductID =[dbo].[Products].ProductID
+                                       LEFT JOIN [dbo].[Customers] ON [dbo].[SalesMaster].[CustomerID] =[dbo].[Customers].CustomerID
+                                        WHERE [dbo].[SalesDetail].ProductID=@ProductID;";
+            using (cnn = new SqlConnection(connectionString))
+            {
+                using (cmd = new SqlCommand(sql, cnn))
+                {
+                    if (textBox5.Text.Trim() != "")
+                    {
+                        cmd.Parameters.Add(new SqlParameter("@ProductID", SqlDbType.Int));
+                        cmd.Parameters["@ProductID"].Value = textBox5.Text.Trim();
+
+
+                        tempdt.Clear();
+                        adapter = new SqlDataAdapter(cmd);
+                        countline = adapter.Fill(tempdt);
+                        if (countline > 0)
+                        {
+                            templist = tempdt.AsEnumerable().Select(row => new SalesInfo
+                            {
+
+                                ProductName = row.Field<string>("品項"),
+
+
+                            }).ToList();
+                            textBox8.Text = templist[0].ProductName;
+                        }
+                        else
+                        {
+                            textBox8.Text = "";
+                        }
+                    }
+                }
+            }/**/
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            //填入訂單主檔相關資訊到資料庫
+            //orderindex
+            try  //使用try...catch...敘述來補捉異動資料可能發生的例外 
+            {
+                //填入訂單主檔相關資訊到資料庫
+                //MessageBox.Show($"新增:{connectionString}");
+                if (ordermastercount < Convert.ToInt32(textBox1.Text.Trim()))
+                {
+                    ordermastercount++;
+                    orderstatus = 1;
+                    using (cnn = new SqlConnection(connectionString))
+                    {
+                        string sql = "INSERT INTO SalesMaster(SaleID,CustomerID, SaleDate,TotalAmount,TotalQuantity) VALUES (@SaleID,@CustomerID, @SaleDate,@TotalAmount,@TotalQuantity)";
+                        using (cmd = new SqlCommand(sql, cnn))
+                        {
+
+                            cmd.CommandText = sql;
+
+                            cmd.Parameters.Add(new SqlParameter("@SaleID", SqlDbType.Int));
+                            cmd.Parameters["@SaleID"].Value = ordermastercount;
+                            cmd.Parameters.Add(new SqlParameter("@CustomerID", SqlDbType.Int));
+                            cmd.Parameters["@CustomerID"].Value = textBox2.Text.Trim();
+                            cmd.Parameters.Add(new SqlParameter("@SaleDate", SqlDbType.DateTime));
+                            cmd.Parameters["@SaleDate"].Value = textBox3.Text.Trim();
+                            cmd.Parameters.Add(new SqlParameter("@TotalAmount", SqlDbType.Decimal));
+                            cmd.Parameters["@TotalAmount"].Value = textBox14.Text.Trim();
+                            cmd.Parameters.Add(new SqlParameter("@TotalQuantity", SqlDbType.Int));
+                            cmd.Parameters["@TotalQuantity"].Value = textBox13.Text.Trim();
+                            cnn.Open();
+                            cmd.ExecuteNonQuery();
+                            //cnn.Close();
+                        }
+                    }
+
+                    //
+
+
+                }
+                int i = 0;
+                //填入訂單明細相關資訊到資料庫
+                //for (i = 0; i < orderinfoitems.Count; i++)
+                //{
+                using (cnn = new SqlConnection(connectionString))
+                {
+                    string sql = "INSERT INTO SalesDetail(DetailID,SaleID, ProductID,Quantity,UnitPrice,SubTotal) VALUES (@DetailID,@SaleID, @ProductID,@Quantity,@UnitPrice,@SubTotal)";
+                    using (cmd = new SqlCommand(sql, cnn))
+                    {
+
+                        orderdetailcount++;
+                        cmd.CommandText = sql;
+                        cmd.Parameters.Add(new SqlParameter("@DetailID", SqlDbType.Int));
+                        cmd.Parameters["@DetailID"].Value = orderdetailcount;
+                        if (orderstatus == 1)
+                        {
+                            cmd.Parameters.Add(new SqlParameter("@SaleID", SqlDbType.Int));
+                            cmd.Parameters["@SaleID"].Value = ordermastercount;
+                            orderstatus = 0;
+                        }
+                        else if (orderstatus == 0)
+                        {
+                            cmd.Parameters.Add(new SqlParameter("@SaleID", SqlDbType.Int));
+                            cmd.Parameters["@SaleID"].Value = textBox1.Text.Trim();
+                        }
+                        //MessageBox.Show($"{cartItems[0].Id}");
+                        cmd.Parameters.Add(new SqlParameter("@ProductID", SqlDbType.Int));
+                        cmd.Parameters["@ProductID"].Value = textBox5.Text.Trim();
+
+                        cmd.Parameters.Add(new SqlParameter("@Quantity", SqlDbType.Int));
+                        cmd.Parameters["@Quantity"].Value = textBox12.Text.Trim();
+                        cmd.Parameters.Add(new SqlParameter("@UnitPrice", SqlDbType.Decimal));
+                        cmd.Parameters["@UnitPrice"].Value = textBox6.Text.Trim();
+                        cmd.Parameters.Add(new SqlParameter("@SubTotal", SqlDbType.Decimal));
+                        cmd.Parameters["@SubTotal"].Value = textBox9.Text.Trim();
+                        cnn.Open();
+
+                        cmd.ExecuteNonQuery();
+                        //cnn.Close();
+                    }
+
+                }
+                //}
+                MessageBox.Show("訂單已成立了!");
+                if (orderstatus == 1)
+                {
+                    orderinfoitems.Add(new SalesInfo
+                    {
+                        SaleID = ordermastercount,
+                        CustomerID = int.Parse(textBox2.Text.Trim()),
+                        ProductID = int.Parse(textBox5.Text.Trim()),
+                        CustomerName = textBox10.Text.Trim(),
+                        ProductName = textBox8.Text.Trim(),
+                        SaleDate = Convert.ToDateTime(textBox3.Text.Trim()),
+                        DetailID = orderdetailcount,
+                        UnitPrice = decimal.Parse(textBox6.Text.Trim()),
+                        Quantity = int.Parse(textBox12.Text.Trim()),
+                        SubTotal = Convert.ToDecimal(textBox9.Text.Trim()),
+                        TotalAmount = Convert.ToDecimal(textBox14.Text.Trim()),
+                        TotalQuantity = int.Parse(textBox13.Text.Trim())
+
+                    }
+                    );
+                }
+                else if (orderstatus == 0)
+                {
+                    orderinfoitems.Add(new SalesInfo
+                    {
+                        SaleID = int.Parse(textBox1.Text.Trim()),
+                        CustomerID = int.Parse(textBox2.Text.Trim()),
+                        ProductID = int.Parse(textBox5.Text.Trim()),
+                        CustomerName = textBox10.Text.Trim(),
+                        ProductName = textBox8.Text.Trim(),
+                        SaleDate = Convert.ToDateTime(textBox3.Text.Trim()),
+                        DetailID = orderdetailcount,
+                        UnitPrice = decimal.Parse(textBox6.Text.Trim()),
+                        Quantity = int.Parse(textBox12.Text.Trim()),
+                        SubTotal = Convert.ToDecimal(textBox9.Text.Trim()),
+                        TotalAmount = Convert.ToDecimal(textBox14.Text.Trim()),
+                        TotalQuantity = int.Parse(textBox13.Text.Trim())
+
+                    }
+                        );
+                }
+                orderinfobs.ResetBindings(false);
+
+            }
+            catch (Exception ex)
+            {
+                cnn.Close();
+                MessageBox.Show(ex.Message + ", 新增資料發生錯誤");
+            }
+            finally
+            {
+                cmd.Parameters.Clear();
+            }
+        }
+
+        private void textBox6_TextChanged(object sender, EventArgs e)
+        {
+            decimal tempprice;
+            int tempQuantity;
+            decimal total = 0;
+            decimal quantitytotal = 0;
+
+            if (ordermastercount < Convert.ToInt32(textBox1.Text.Trim()))
+            {
+
+                if (textBox6.Text.Trim() != "" && textBox12.Text.Trim() != "" && textBox1.Text.Trim() != "")
+                {
+                    tempprice = decimal.Parse(textBox6.Text.Trim());
+                    tempQuantity = int.Parse(textBox12.Text.Trim());
+                    textBox9.Text = (tempprice * tempQuantity).ToString();
+                    ///
+
+                    foreach (var item in orderinfoitems)
+                    {
+                        if (int.Parse(textBox1.Text.Trim()) == item.SaleID)
+                        {
+                            total += item.SubTotal;
+                            quantitytotal += item.Quantity;
+                        }
+
+                        //Pricelist.Add(  Convert.ToDecimal( item.Price )  );
+                        //ItemNamelist.Add(item.Item.Name);
+                    }
+                    total += (decimal.Parse(textBox9.Text));
+                    quantitytotal += tempQuantity;
+                    textBox13.Text = quantitytotal.ToString();
+                    textBox14.Text = total.ToString();
+
+                    //currentOrder.FinalTotal = Math.Round(currentOrder.OriginalTotal * currentOrder.DiscountRate, 0);
+                    //currentOrder.quantityTotal = quantitytotal;
+                    ///
+                }
+            }
+            else if (ordermastercount >= Convert.ToInt32(textBox1.Text.Trim()) && Convert.ToInt32(textBox1.Text.Trim())>0)
+            {
+                if (textBox6.Text.Trim() != "" && textBox12.Text.Trim() != "" && textBox1.Text.Trim() != "")
+                {
+                    tempprice = decimal.Parse(textBox6.Text.Trim());
+                    tempQuantity = int.Parse(textBox12.Text.Trim());
+                    textBox9.Text = (tempprice * tempQuantity).ToString();
+                    ///
+
+                    foreach (var item in orderinfoitems)
+                    {
+                        if (int.Parse(textBox1.Text.Trim()) == item.SaleID && int.Parse(textBox4.Text.Trim()) != item.DetailID)
+                        {
+                            total += item.SubTotal;
+                            quantitytotal += item.Quantity;
+                        }
+
+                        //Pricelist.Add(  Convert.ToDecimal( item.Price )  );
+                        //ItemNamelist.Add(item.Item.Name);
+                    }
+                    total += (decimal.Parse(textBox9.Text));
+                    quantitytotal += tempQuantity;
+                    textBox13.Text = quantitytotal.ToString();
+                    textBox14.Text = total.ToString();
+
+                    //currentOrder.FinalTotal = Math.Round(currentOrder.OriginalTotal * currentOrder.DiscountRate, 0);
+                    //currentOrder.quantityTotal = quantitytotal;
+                    ///
+                }
+            }
+            //textBox9.Text = (Convert.ToDecimal(textBox6.Text.Trim()) * Convert.ToInt32(textBox12.Text.Trim())).ToString();
+        }
+
+        private void textBox12_TextChanged(object sender, EventArgs e)
+        {
+            decimal tempprice;
+            int tempQuantity;
+            decimal total = 0;
+            decimal quantitytotal = 0;
+
+            if (ordermastercount < Convert.ToInt32(textBox1.Text.Trim())) { 
+
+                if (textBox6.Text.Trim() != "" && textBox12.Text.Trim() != "" && textBox1.Text.Trim() != "")
+            {
+                tempprice = decimal.Parse(textBox6.Text.Trim());
+                tempQuantity = int.Parse(textBox12.Text.Trim());
+                textBox9.Text = (tempprice * tempQuantity).ToString();
+                ///
+
+                foreach (var item in orderinfoitems)
+                {
+                    if (int.Parse(textBox1.Text.Trim()) == item.SaleID )
+                    {
+                        total += item.SubTotal;
+                        quantitytotal += item.Quantity;
+                    }
+
+                    //Pricelist.Add(  Convert.ToDecimal( item.Price )  );
+                    //ItemNamelist.Add(item.Item.Name);
+                }
+                total += (decimal.Parse(textBox9.Text));
+                quantitytotal += tempQuantity;
+                textBox13.Text= quantitytotal.ToString();
+                textBox14.Text = total.ToString();
+
+                //currentOrder.FinalTotal = Math.Round(currentOrder.OriginalTotal * currentOrder.DiscountRate, 0);
+                //currentOrder.quantityTotal = quantitytotal;
+                ///
+
+
+            }
+            }else if (ordermastercount >= Convert.ToInt32(textBox1.Text.Trim()) && Convert.ToInt32(textBox1.Text.Trim()) > 0)
+            {
+                if (textBox6.Text.Trim() != "" && textBox12.Text.Trim() != "" && textBox1.Text.Trim() != "") { 
+                    tempprice = decimal.Parse(textBox6.Text.Trim());
+                tempQuantity = int.Parse(textBox12.Text.Trim());
+                textBox9.Text = (tempprice * tempQuantity).ToString();
+                ///
+
+                foreach (var item in orderinfoitems)
+                {
+                    if (int.Parse(textBox1.Text.Trim()) == item.SaleID && int.Parse(textBox4.Text.Trim()) != item.DetailID)
+                    {
+                        total += item.SubTotal;
+                        quantitytotal += item.Quantity;
+                    }
+
+                    //Pricelist.Add(  Convert.ToDecimal( item.Price )  );
+                    //ItemNamelist.Add(item.Item.Name);
+                }
+                total += (decimal.Parse(textBox9.Text));
+                quantitytotal += tempQuantity;
+                textBox13.Text = quantitytotal.ToString();
+                textBox14.Text = total.ToString();
+                }
             }
         }
 

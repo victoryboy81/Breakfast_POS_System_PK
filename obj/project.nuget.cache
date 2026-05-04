@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "D0th0f7Fmys=",
+  "dgSpecHash": "NgnydEgq/+4=",
   "success": true,
-  "projectFilePath": "C:\\Users\\49927\\Desktop\\vscode_project\\dotnet10\\project\\winform\\早餐店銷售管理系統\\V1.3\\早餐店銷售管理系統\\早餐店銷售管理系統.csproj",
+  "projectFilePath": "C:\\Users\\49927\\Desktop\\vscode_project\\dotnet10\\project\\winform\\早餐店銷售管理系統\\V1.6\\早餐店銷售管理系統\\早餐店銷售管理系統.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\49927\\.nuget\\packages\\microsoft.bcl.cryptography\\9.0.13\\microsoft.bcl.cryptography.9.0.13.nupkg.sha512",
     "C:\\Users\\49927\\.nuget\\packages\\microsoft.data.sqlclient\\7.0.0\\microsoft.data.sqlclient.7.0.0.nupkg.sha512",

@@ -98,6 +98,44 @@ namespace BreakfastCart
             paycombo = new ComboBox();
             regionlab = new Label();
             custnamelab = new Label();
+            Tab_OrderCreate = new TabPage();
+            groupBox7 = new GroupBox();
+            textBox14 = new TextBox();
+            label15 = new Label();
+            textBox13 = new TextBox();
+            label14 = new Label();
+            panel20 = new Panel();
+            panel21 = new Panel();
+            textBox11 = new TextBox();
+            label12 = new Label();
+            dataGridView1 = new DataGridView();
+            panel19 = new Panel();
+            button4 = new Button();
+            button3 = new Button();
+            button2 = new Button();
+            button1 = new Button();
+            groupBox6 = new GroupBox();
+            textBox12 = new TextBox();
+            label13 = new Label();
+            textBox9 = new TextBox();
+            label10 = new Label();
+            textBox8 = new TextBox();
+            label9 = new Label();
+            textBox6 = new TextBox();
+            label7 = new Label();
+            textBox5 = new TextBox();
+            label6 = new Label();
+            textBox4 = new TextBox();
+            label4 = new Label();
+            groupBox5 = new GroupBox();
+            textBox10 = new TextBox();
+            label11 = new Label();
+            textBox3 = new TextBox();
+            label3 = new Label();
+            textBox2 = new TextBox();
+            label2 = new Label();
+            textBox1 = new TextBox();
+            label1 = new Label();
             Tab_Order = new TabPage();
             groupBox3 = new GroupBox();
             panel10 = new Panel();
@@ -172,6 +210,14 @@ namespace BreakfastCart
             panel16.SuspendLayout();
             panel9.SuspendLayout();
             panel8.SuspendLayout();
+            Tab_OrderCreate.SuspendLayout();
+            groupBox7.SuspendLayout();
+            panel20.SuspendLayout();
+            panel21.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
+            panel19.SuspendLayout();
+            groupBox6.SuspendLayout();
+            groupBox5.SuspendLayout();
             Tab_Order.SuspendLayout();
             groupBox3.SuspendLayout();
             panel10.SuspendLayout();
@@ -196,7 +242,7 @@ namespace BreakfastCart
             Tab_usermenu.Margin = new Padding(5);
             Tab_usermenu.Name = "Tab_usermenu";
             Tab_usermenu.Padding = new Padding(5);
-            Tab_usermenu.Size = new Size(669, 893);
+            Tab_usermenu.Size = new Size(820, 893);
             Tab_usermenu.TabIndex = 0;
             Tab_usermenu.Text = "菜單(顧客)";
             // 
@@ -209,7 +255,7 @@ namespace BreakfastCart
             grpMenu.Margin = new Padding(5);
             grpMenu.Name = "grpMenu";
             grpMenu.Padding = new Padding(5);
-            grpMenu.Size = new Size(652, 871);
+            grpMenu.Size = new Size(800, 871);
             grpMenu.TabIndex = 6;
             grpMenu.TabStop = false;
             grpMenu.Text = "早餐菜單";
@@ -222,7 +268,7 @@ namespace BreakfastCart
             panel2.Location = new Point(13, 103);
             panel2.Margin = new Padding(5);
             panel2.Name = "panel2";
-            panel2.Size = new Size(630, 759);
+            panel2.Size = new Size(778, 759);
             panel2.TabIndex = 2;
             // 
             // reviewimg
@@ -244,7 +290,7 @@ namespace BreakfastCart
             dgvMenu.Margin = new Padding(5);
             dgvMenu.Name = "dgvMenu";
             dgvMenu.RowHeadersWidth = 62;
-            dgvMenu.Size = new Size(621, 294);
+            dgvMenu.Size = new Size(748, 294);
             dgvMenu.TabIndex = 0;
             dgvMenu.CurrentCellChanged += dgvMenu_CurrentCellChanged;
             // 
@@ -270,14 +316,14 @@ namespace BreakfastCart
             panel1.Location = new Point(9, 32);
             panel1.Margin = new Padding(5);
             panel1.Name = "panel1";
-            panel1.Size = new Size(643, 61);
+            panel1.Size = new Size(781, 61);
             panel1.TabIndex = 1;
             // 
             // VIPcheckbtn
             // 
-            VIPcheckbtn.Location = new Point(546, 9);
+            VIPcheckbtn.Location = new Point(545, 9);
             VIPcheckbtn.Name = "VIPcheckbtn";
-            VIPcheckbtn.Size = new Size(84, 34);
+            VIPcheckbtn.Size = new Size(83, 34);
             VIPcheckbtn.TabIndex = 5;
             VIPcheckbtn.Text = "驗證";
             VIPcheckbtn.UseVisualStyleBackColor = true;
@@ -411,7 +457,7 @@ namespace BreakfastCart
             grpCart.Controls.Add(panel3);
             grpCart.Controls.Add(lblTotal);
             grpCart.Controls.Add(lblDiscount);
-            grpCart.Location = new Point(701, 97);
+            grpCart.Location = new Point(869, 106);
             grpCart.Margin = new Padding(5);
             grpCart.Name = "grpCart";
             grpCart.Padding = new Padding(5);
@@ -465,13 +511,14 @@ namespace BreakfastCart
             tabControl1.Controls.Add(Tab_usermenu);
             tabControl1.Controls.Add(Tab_adminmenu);
             tabControl1.Controls.Add(Tab_MemberVIP);
+            tabControl1.Controls.Add(Tab_OrderCreate);
             tabControl1.Controls.Add(Tab_Order);
             tabControl1.Controls.Add(Tab_OrderDetail);
             tabControl1.Location = new Point(14, 60);
             tabControl1.Margin = new Padding(5);
             tabControl1.Name = "tabControl1";
             tabControl1.SelectedIndex = 0;
-            tabControl1.Size = new Size(677, 932);
+            tabControl1.Size = new Size(828, 932);
             tabControl1.TabIndex = 8;
             tabControl1.Selecting += tabControl1_Selecting;
             // 
@@ -483,7 +530,7 @@ namespace BreakfastCart
             Tab_adminmenu.Margin = new Padding(5);
             Tab_adminmenu.Name = "Tab_adminmenu";
             Tab_adminmenu.Padding = new Padding(5);
-            Tab_adminmenu.Size = new Size(669, 893);
+            Tab_adminmenu.Size = new Size(820, 893);
             Tab_adminmenu.TabIndex = 1;
             Tab_adminmenu.Text = "菜單(管理員)";
             // 
@@ -496,7 +543,7 @@ namespace BreakfastCart
             groupBox1.Margin = new Padding(5);
             groupBox1.Name = "groupBox1";
             groupBox1.Padding = new Padding(5);
-            groupBox1.Size = new Size(651, 872);
+            groupBox1.Size = new Size(801, 872);
             groupBox1.TabIndex = 0;
             groupBox1.TabStop = false;
             groupBox1.Text = "菜單管理";
@@ -513,7 +560,7 @@ namespace BreakfastCart
             panel4.Location = new Point(9, 28);
             panel4.Margin = new Padding(5);
             panel4.Name = "panel4";
-            panel4.Size = new Size(607, 414);
+            panel4.Size = new Size(783, 414);
             panel4.TabIndex = 1;
             // 
             // txtlab
@@ -707,7 +754,7 @@ namespace BreakfastCart
             adminmenudgv.Margin = new Padding(5);
             adminmenudgv.Name = "adminmenudgv";
             adminmenudgv.RowHeadersWidth = 62;
-            adminmenudgv.Size = new Size(607, 406);
+            adminmenudgv.Size = new Size(757, 406);
             adminmenudgv.TabIndex = 0;
             adminmenudgv.CurrentCellChanged += adminmenudgv_CurrentCellChanged;
             // 
@@ -718,7 +765,7 @@ namespace BreakfastCart
             Tab_MemberVIP.Location = new Point(4, 35);
             Tab_MemberVIP.Name = "Tab_MemberVIP";
             Tab_MemberVIP.Padding = new Padding(3);
-            Tab_MemberVIP.Size = new Size(669, 893);
+            Tab_MemberVIP.Size = new Size(820, 893);
             Tab_MemberVIP.TabIndex = 2;
             Tab_MemberVIP.Text = "會員(管理員)";
             // 
@@ -730,7 +777,7 @@ namespace BreakfastCart
             groupBox2.Margin = new Padding(5);
             groupBox2.Name = "groupBox2";
             groupBox2.Padding = new Padding(5);
-            groupBox2.Size = new Size(651, 869);
+            groupBox2.Size = new Size(801, 869);
             groupBox2.TabIndex = 0;
             groupBox2.TabStop = false;
             groupBox2.Text = "會員管理";
@@ -745,7 +792,7 @@ namespace BreakfastCart
             panel7.Location = new Point(19, 26);
             panel7.Margin = new Padding(5);
             panel7.Name = "panel7";
-            panel7.Size = new Size(622, 833);
+            panel7.Size = new Size(773, 833);
             panel7.TabIndex = 0;
             // 
             // custdgv
@@ -757,7 +804,7 @@ namespace BreakfastCart
             custdgv.Margin = new Padding(5);
             custdgv.Name = "custdgv";
             custdgv.RowHeadersWidth = 62;
-            custdgv.Size = new Size(575, 544);
+            custdgv.Size = new Size(726, 544);
             custdgv.TabIndex = 1;
             custdgv.CurrentCellChanged += custdgv_CurrentCellChanged;
             // 
@@ -768,7 +815,7 @@ namespace BreakfastCart
             panel16.Controls.Add(custsearchtxt);
             panel16.Location = new Point(22, 221);
             panel16.Name = "panel16";
-            panel16.Size = new Size(575, 49);
+            panel16.Size = new Size(726, 49);
             panel16.TabIndex = 4;
             // 
             // custsearchlab
@@ -800,12 +847,12 @@ namespace BreakfastCart
             panel9.Location = new Point(22, 9);
             panel9.Margin = new Padding(5);
             panel9.Name = "panel9";
-            panel9.Size = new Size(575, 78);
+            panel9.Size = new Size(726, 78);
             panel9.TabIndex = 1;
             // 
             // custsortbtn
             // 
-            custsortbtn.Location = new Point(421, 23);
+            custsortbtn.Location = new Point(564, 23);
             custsortbtn.Margin = new Padding(5);
             custsortbtn.Name = "custsortbtn";
             custsortbtn.Size = new Size(118, 35);
@@ -816,7 +863,7 @@ namespace BreakfastCart
             // 
             // custdeletebtn
             // 
-            custdeletebtn.Location = new Point(284, 23);
+            custdeletebtn.Location = new Point(398, 23);
             custdeletebtn.Margin = new Padding(5);
             custdeletebtn.Name = "custdeletebtn";
             custdeletebtn.Size = new Size(118, 35);
@@ -827,7 +874,7 @@ namespace BreakfastCart
             // 
             // custupdatebtn
             // 
-            custupdatebtn.Location = new Point(149, 23);
+            custupdatebtn.Location = new Point(207, 23);
             custupdatebtn.Margin = new Padding(5);
             custupdatebtn.Name = "custupdatebtn";
             custupdatebtn.Size = new Size(118, 35);
@@ -838,7 +885,7 @@ namespace BreakfastCart
             // 
             // custaddbtn
             // 
-            custaddbtn.Location = new Point(22, 23);
+            custaddbtn.Location = new Point(43, 23);
             custaddbtn.Margin = new Padding(5);
             custaddbtn.Name = "custaddbtn";
             custaddbtn.Size = new Size(118, 35);
@@ -861,7 +908,7 @@ namespace BreakfastCart
             panel8.Location = new Point(22, 87);
             panel8.Margin = new Padding(5);
             panel8.Name = "panel8";
-            panel8.Size = new Size(575, 133);
+            panel8.Size = new Size(726, 133);
             panel8.TabIndex = 0;
             // 
             // custIDtxt
@@ -936,6 +983,378 @@ namespace BreakfastCart
             custnamelab.TabIndex = 0;
             custnamelab.Text = "客戶名稱";
             // 
+            // Tab_OrderCreate
+            // 
+            Tab_OrderCreate.Controls.Add(groupBox7);
+            Tab_OrderCreate.Controls.Add(panel20);
+            Tab_OrderCreate.Controls.Add(panel19);
+            Tab_OrderCreate.Controls.Add(groupBox6);
+            Tab_OrderCreate.Controls.Add(groupBox5);
+            Tab_OrderCreate.Location = new Point(4, 35);
+            Tab_OrderCreate.Name = "Tab_OrderCreate";
+            Tab_OrderCreate.Size = new Size(820, 893);
+            Tab_OrderCreate.TabIndex = 5;
+            Tab_OrderCreate.Text = "訂單(管理者)";
+            Tab_OrderCreate.UseVisualStyleBackColor = true;
+            // 
+            // groupBox7
+            // 
+            groupBox7.BackColor = Color.Lime;
+            groupBox7.Controls.Add(textBox14);
+            groupBox7.Controls.Add(label15);
+            groupBox7.Controls.Add(textBox13);
+            groupBox7.Controls.Add(label14);
+            groupBox7.Location = new Point(16, 788);
+            groupBox7.Name = "groupBox7";
+            groupBox7.Size = new Size(775, 86);
+            groupBox7.TabIndex = 11;
+            groupBox7.TabStop = false;
+            groupBox7.Text = "訂單主檔(單尾)";
+            // 
+            // textBox14
+            // 
+            textBox14.Location = new Point(484, 39);
+            textBox14.Name = "textBox14";
+            textBox14.ReadOnly = true;
+            textBox14.Size = new Size(150, 30);
+            textBox14.TabIndex = 3;
+            // 
+            // label15
+            // 
+            label15.AutoSize = true;
+            label15.Location = new Point(393, 43);
+            label15.Name = "label15";
+            label15.Size = new Size(64, 23);
+            label15.TabIndex = 2;
+            label15.Text = "總金額";
+            // 
+            // textBox13
+            // 
+            textBox13.Location = new Point(171, 39);
+            textBox13.Name = "textBox13";
+            textBox13.ReadOnly = true;
+            textBox13.Size = new Size(150, 30);
+            textBox13.TabIndex = 1;
+            textBox13.TextChanged += textBox13_TextChanged;
+            // 
+            // label14
+            // 
+            label14.AutoSize = true;
+            label14.Location = new Point(91, 43);
+            label14.Name = "label14";
+            label14.Size = new Size(64, 23);
+            label14.TabIndex = 0;
+            label14.Text = "總數量";
+            // 
+            // panel20
+            // 
+            panel20.BackColor = Color.FromArgb(192, 255, 255);
+            panel20.Controls.Add(panel21);
+            panel20.Controls.Add(dataGridView1);
+            panel20.Location = new Point(16, 365);
+            panel20.Name = "panel20";
+            panel20.Size = new Size(775, 422);
+            panel20.TabIndex = 10;
+            // 
+            // panel21
+            // 
+            panel21.BackColor = Color.FromArgb(255, 255, 192);
+            panel21.Controls.Add(textBox11);
+            panel21.Controls.Add(label12);
+            panel21.Location = new Point(0, 3);
+            panel21.Name = "panel21";
+            panel21.Size = new Size(775, 61);
+            panel21.TabIndex = 1;
+            // 
+            // textBox11
+            // 
+            textBox11.Location = new Point(108, 18);
+            textBox11.Name = "textBox11";
+            textBox11.Size = new Size(499, 30);
+            textBox11.TabIndex = 1;
+            textBox11.TextChanged += textBox11_TextChanged;
+            // 
+            // label12
+            // 
+            label12.AutoSize = true;
+            label12.Location = new Point(17, 21);
+            label12.Name = "label12";
+            label12.Size = new Size(82, 23);
+            label12.TabIndex = 0;
+            label12.Text = "訂單查詢";
+            // 
+            // dataGridView1
+            // 
+            dataGridView1.BackgroundColor = Color.White;
+            dataGridView1.BorderStyle = BorderStyle.None;
+            dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dataGridView1.Location = new Point(0, 60);
+            dataGridView1.Name = "dataGridView1";
+            dataGridView1.RowHeadersWidth = 62;
+            dataGridView1.Size = new Size(775, 361);
+            dataGridView1.TabIndex = 0;
+            dataGridView1.CurrentCellChanged += dataGridView1_CurrentCellChanged;
+            // 
+            // panel19
+            // 
+            panel19.BackColor = Color.FromArgb(255, 192, 128);
+            panel19.Controls.Add(button4);
+            panel19.Controls.Add(button3);
+            panel19.Controls.Add(button2);
+            panel19.Controls.Add(button1);
+            panel19.Location = new Point(16, 14);
+            panel19.Name = "panel19";
+            panel19.Size = new Size(775, 66);
+            panel19.TabIndex = 2;
+            // 
+            // button4
+            // 
+            button4.Location = new Point(584, 18);
+            button4.Name = "button4";
+            button4.Size = new Size(112, 34);
+            button4.TabIndex = 3;
+            button4.Text = "排序";
+            button4.UseVisualStyleBackColor = true;
+            button4.Click += button4_Click;
+            // 
+            // button3
+            // 
+            button3.Location = new Point(410, 18);
+            button3.Name = "button3";
+            button3.Size = new Size(112, 34);
+            button3.TabIndex = 2;
+            button3.Text = "刪除";
+            button3.UseVisualStyleBackColor = true;
+            button3.Click += button3_Click;
+            // 
+            // button2
+            // 
+            button2.Location = new Point(243, 18);
+            button2.Name = "button2";
+            button2.Size = new Size(112, 34);
+            button2.TabIndex = 1;
+            button2.Text = "更新";
+            button2.UseVisualStyleBackColor = true;
+            button2.Click += button2_Click;
+            // 
+            // button1
+            // 
+            button1.Location = new Point(73, 18);
+            button1.Name = "button1";
+            button1.Size = new Size(112, 34);
+            button1.TabIndex = 0;
+            button1.Text = "新增";
+            button1.UseVisualStyleBackColor = true;
+            button1.Click += button1_Click;
+            // 
+            // groupBox6
+            // 
+            groupBox6.BackColor = Color.FromArgb(192, 255, 192);
+            groupBox6.Controls.Add(textBox12);
+            groupBox6.Controls.Add(label13);
+            groupBox6.Controls.Add(textBox9);
+            groupBox6.Controls.Add(label10);
+            groupBox6.Controls.Add(textBox8);
+            groupBox6.Controls.Add(label9);
+            groupBox6.Controls.Add(textBox6);
+            groupBox6.Controls.Add(label7);
+            groupBox6.Controls.Add(textBox5);
+            groupBox6.Controls.Add(label6);
+            groupBox6.Controls.Add(textBox4);
+            groupBox6.Controls.Add(label4);
+            groupBox6.Location = new Point(16, 218);
+            groupBox6.Name = "groupBox6";
+            groupBox6.Size = new Size(775, 152);
+            groupBox6.TabIndex = 1;
+            groupBox6.TabStop = false;
+            groupBox6.Text = "訂單明細相關資訊(單身)";
+            // 
+            // textBox12
+            // 
+            textBox12.Location = new Point(509, 92);
+            textBox12.Name = "textBox12";
+            textBox12.Size = new Size(98, 30);
+            textBox12.TabIndex = 13;
+            textBox12.TextChanged += textBox12_TextChanged;
+            // 
+            // label13
+            // 
+            label13.AutoSize = true;
+            label13.Location = new Point(421, 95);
+            label13.Name = "label13";
+            label13.Size = new Size(46, 23);
+            label13.TabIndex = 12;
+            label13.Text = "數量";
+            // 
+            // textBox9
+            // 
+            textBox9.Location = new Point(310, 97);
+            textBox9.Name = "textBox9";
+            textBox9.ReadOnly = true;
+            textBox9.Size = new Size(98, 30);
+            textBox9.TabIndex = 11;
+            // 
+            // label10
+            // 
+            label10.AutoSize = true;
+            label10.Location = new Point(218, 100);
+            label10.Name = "label10";
+            label10.Size = new Size(82, 23);
+            label10.TabIndex = 10;
+            label10.Text = "小結總和";
+            // 
+            // textBox8
+            // 
+            textBox8.Location = new Point(509, 41);
+            textBox8.Name = "textBox8";
+            textBox8.ReadOnly = true;
+            textBox8.Size = new Size(136, 30);
+            textBox8.TabIndex = 9;
+            // 
+            // label9
+            // 
+            label9.AutoSize = true;
+            label9.Location = new Point(421, 44);
+            label9.Name = "label9";
+            label9.Size = new Size(82, 23);
+            label9.TabIndex = 8;
+            label9.Text = "產品名稱";
+            // 
+            // textBox6
+            // 
+            textBox6.Location = new Point(105, 92);
+            textBox6.Name = "textBox6";
+            textBox6.Size = new Size(101, 30);
+            textBox6.TabIndex = 5;
+            textBox6.TextChanged += textBox6_TextChanged;
+            // 
+            // label7
+            // 
+            label7.AutoSize = true;
+            label7.Location = new Point(17, 95);
+            label7.Name = "label7";
+            label7.Size = new Size(82, 23);
+            label7.TabIndex = 4;
+            label7.Text = "當時單價";
+            // 
+            // textBox5
+            // 
+            textBox5.Location = new Point(310, 44);
+            textBox5.Name = "textBox5";
+            textBox5.Size = new Size(98, 30);
+            textBox5.TabIndex = 3;
+            textBox5.TextChanged += textBox5_TextChanged;
+            // 
+            // label6
+            // 
+            label6.AutoSize = true;
+            label6.Location = new Point(218, 48);
+            label6.Name = "label6";
+            label6.Size = new Size(82, 23);
+            label6.TabIndex = 2;
+            label6.Text = "產品編號";
+            // 
+            // textBox4
+            // 
+            textBox4.Location = new Point(102, 40);
+            textBox4.Name = "textBox4";
+            textBox4.ReadOnly = true;
+            textBox4.Size = new Size(100, 30);
+            textBox4.TabIndex = 1;
+            // 
+            // label4
+            // 
+            label4.AutoSize = true;
+            label4.Location = new Point(14, 46);
+            label4.Name = "label4";
+            label4.Size = new Size(82, 23);
+            label4.TabIndex = 0;
+            label4.Text = "明細序號";
+            // 
+            // groupBox5
+            // 
+            groupBox5.BackColor = Color.FromArgb(192, 255, 192);
+            groupBox5.Controls.Add(textBox10);
+            groupBox5.Controls.Add(label11);
+            groupBox5.Controls.Add(textBox3);
+            groupBox5.Controls.Add(label3);
+            groupBox5.Controls.Add(textBox2);
+            groupBox5.Controls.Add(label2);
+            groupBox5.Controls.Add(textBox1);
+            groupBox5.Controls.Add(label1);
+            groupBox5.Location = new Point(16, 77);
+            groupBox5.Name = "groupBox5";
+            groupBox5.Size = new Size(775, 141);
+            groupBox5.TabIndex = 0;
+            groupBox5.TabStop = false;
+            groupBox5.Text = "訂單主檔相關資訊(單頭)";
+            // 
+            // textBox10
+            // 
+            textBox10.Location = new Point(493, 77);
+            textBox10.Name = "textBox10";
+            textBox10.ReadOnly = true;
+            textBox10.Size = new Size(128, 30);
+            textBox10.TabIndex = 7;
+            // 
+            // label11
+            // 
+            label11.AutoSize = true;
+            label11.Location = new Point(385, 84);
+            label11.Name = "label11";
+            label11.Size = new Size(82, 23);
+            label11.TabIndex = 6;
+            label11.Text = "客戶名稱";
+            // 
+            // textBox3
+            // 
+            textBox3.Location = new Point(104, 84);
+            textBox3.Name = "textBox3";
+            textBox3.Size = new Size(251, 30);
+            textBox3.TabIndex = 5;
+            // 
+            // label3
+            // 
+            label3.AutoSize = true;
+            label3.Location = new Point(14, 84);
+            label3.Name = "label3";
+            label3.Size = new Size(82, 23);
+            label3.TabIndex = 4;
+            label3.Text = "下單日期";
+            // 
+            // textBox2
+            // 
+            textBox2.Location = new Point(493, 34);
+            textBox2.Name = "textBox2";
+            textBox2.Size = new Size(83, 30);
+            textBox2.TabIndex = 3;
+            textBox2.TextChanged += textBox2_TextChanged;
+            // 
+            // label2
+            // 
+            label2.AutoSize = true;
+            label2.Location = new Point(385, 34);
+            label2.Name = "label2";
+            label2.Size = new Size(82, 23);
+            label2.TabIndex = 2;
+            label2.Text = "客戶編號";
+            // 
+            // textBox1
+            // 
+            textBox1.Location = new Point(102, 35);
+            textBox1.Name = "textBox1";
+            textBox1.Size = new Size(83, 30);
+            textBox1.TabIndex = 1;
+            // 
+            // label1
+            // 
+            label1.AutoSize = true;
+            label1.Location = new Point(14, 41);
+            label1.Name = "label1";
+            label1.Size = new Size(82, 23);
+            label1.TabIndex = 0;
+            label1.Text = "訂單編號";
+            // 
             // Tab_Order
             // 
             Tab_Order.BackColor = Color.DarkGray;
@@ -943,7 +1362,7 @@ namespace BreakfastCart
             Tab_Order.Location = new Point(4, 35);
             Tab_Order.Name = "Tab_Order";
             Tab_Order.Padding = new Padding(3);
-            Tab_Order.Size = new Size(669, 893);
+            Tab_Order.Size = new Size(820, 893);
             Tab_Order.TabIndex = 3;
             Tab_Order.Text = "訂單主檔(管理員)";
             // 
@@ -955,7 +1374,7 @@ namespace BreakfastCart
             groupBox3.Margin = new Padding(5);
             groupBox3.Name = "groupBox3";
             groupBox3.Padding = new Padding(5);
-            groupBox3.Size = new Size(649, 869);
+            groupBox3.Size = new Size(807, 869);
             groupBox3.TabIndex = 0;
             groupBox3.TabStop = false;
             groupBox3.Text = "訂單主檔管理";
@@ -969,7 +1388,7 @@ namespace BreakfastCart
             panel10.Location = new Point(17, 34);
             panel10.Margin = new Padding(5);
             panel10.Name = "panel10";
-            panel10.Size = new Size(622, 840);
+            panel10.Size = new Size(787, 840);
             panel10.TabIndex = 0;
             // 
             // ordermasterdgv
@@ -981,7 +1400,7 @@ namespace BreakfastCart
             ordermasterdgv.Margin = new Padding(5);
             ordermasterdgv.Name = "ordermasterdgv";
             ordermasterdgv.RowHeadersWidth = 62;
-            ordermasterdgv.Size = new Size(602, 506);
+            ordermasterdgv.Size = new Size(764, 506);
             ordermasterdgv.TabIndex = 1;
             ordermasterdgv.CurrentCellChanged += ordermasterdgv_CurrentCellChanged;
             // 
@@ -992,7 +1411,7 @@ namespace BreakfastCart
             panel12.Controls.Add(ordermasteraddbtn);
             panel12.Controls.Add(ordermastersortbtn);
             panel12.Controls.Add(ordermasterdeletebtn);
-            panel12.Location = new Point(453, 17);
+            panel12.Location = new Point(615, 17);
             panel12.Margin = new Padding(5);
             panel12.Name = "panel12";
             panel12.Size = new Size(165, 232);
@@ -1047,7 +1466,7 @@ namespace BreakfastCart
             panel17.Controls.Add(ordermastercustIDsearchtxt);
             panel17.Location = new Point(16, 248);
             panel17.Name = "panel17";
-            panel17.Size = new Size(602, 58);
+            panel17.Size = new Size(764, 58);
             panel17.TabIndex = 10;
             // 
             // ordermastercustIDsearchlab
@@ -1085,7 +1504,7 @@ namespace BreakfastCart
             panel11.Location = new Point(16, 17);
             panel11.Margin = new Padding(5);
             panel11.Name = "panel11";
-            panel11.Size = new Size(437, 232);
+            panel11.Size = new Size(602, 232);
             panel11.TabIndex = 6;
             // 
             // totalquantitytxt
@@ -1181,7 +1600,7 @@ namespace BreakfastCart
             Tab_OrderDetail.Location = new Point(4, 35);
             Tab_OrderDetail.Name = "Tab_OrderDetail";
             Tab_OrderDetail.Padding = new Padding(3);
-            Tab_OrderDetail.Size = new Size(669, 893);
+            Tab_OrderDetail.Size = new Size(820, 893);
             Tab_OrderDetail.TabIndex = 4;
             Tab_OrderDetail.Text = "訂單明細(管理員)";
             // 
@@ -1193,7 +1612,7 @@ namespace BreakfastCart
             groupBox4.Margin = new Padding(5);
             groupBox4.Name = "groupBox4";
             groupBox4.Padding = new Padding(5);
-            groupBox4.Size = new Size(651, 871);
+            groupBox4.Size = new Size(809, 871);
             groupBox4.TabIndex = 0;
             groupBox4.TabStop = false;
             groupBox4.Text = "訂單明細檔管理";
@@ -1207,7 +1626,7 @@ namespace BreakfastCart
             panel13.Location = new Point(9, 29);
             panel13.Margin = new Padding(5);
             panel13.Name = "panel13";
-            panel13.Size = new Size(611, 833);
+            panel13.Size = new Size(797, 833);
             panel13.TabIndex = 0;
             // 
             // panel18
@@ -1217,7 +1636,7 @@ namespace BreakfastCart
             panel18.Controls.Add(orderdetailcustIDsearchlab);
             panel18.Location = new Point(33, 297);
             panel18.Name = "panel18";
-            panel18.Size = new Size(572, 69);
+            panel18.Size = new Size(757, 69);
             panel18.TabIndex = 4;
             // 
             // orderdetailcustIDsearchtxt
@@ -1248,7 +1667,7 @@ namespace BreakfastCart
             orderdetaildgv.Margin = new Padding(5);
             orderdetaildgv.Name = "orderdetaildgv";
             orderdetaildgv.RowHeadersWidth = 62;
-            orderdetaildgv.Size = new Size(572, 431);
+            orderdetaildgv.Size = new Size(757, 431);
             orderdetaildgv.TabIndex = 1;
             orderdetaildgv.CurrentCellChanged += orderdetaildgv_CurrentCellChanged;
             // 
@@ -1259,10 +1678,10 @@ namespace BreakfastCart
             panel15.Controls.Add(orderdetaildeletebtn);
             panel15.Controls.Add(orderdetailupdatebtn);
             panel15.Controls.Add(orderdetailaddbtn);
-            panel15.Location = new Point(438, 9);
+            panel15.Location = new Point(623, 5);
             panel15.Margin = new Padding(5);
             panel15.Name = "panel15";
-            panel15.Size = new Size(167, 288);
+            panel15.Size = new Size(167, 293);
             panel15.TabIndex = 1;
             // 
             // orderdetailsortbtn
@@ -1327,7 +1746,7 @@ namespace BreakfastCart
             panel14.Location = new Point(33, 8);
             panel14.Margin = new Padding(5);
             panel14.Name = "panel14";
-            panel14.Size = new Size(407, 290);
+            panel14.Size = new Size(590, 290);
             panel14.TabIndex = 0;
             // 
             // numberIDtxt
@@ -1442,7 +1861,7 @@ namespace BreakfastCart
             showVIPmessiagelab.AutoSize = true;
             showVIPmessiagelab.Font = new Font("Microsoft JhengHei UI", 16F, FontStyle.Regular, GraphicsUnit.Point, 136);
             showVIPmessiagelab.ForeColor = Color.Red;
-            showVIPmessiagelab.Location = new Point(732, 51);
+            showVIPmessiagelab.Location = new Point(900, 60);
             showVIPmessiagelab.Name = "showVIPmessiagelab";
             showVIPmessiagelab.Size = new Size(242, 41);
             showVIPmessiagelab.TabIndex = 9;
@@ -1452,7 +1871,7 @@ namespace BreakfastCart
             // 
             AutoScaleDimensions = new SizeF(11F, 23F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1537, 1050);
+            ClientSize = new Size(1702, 1050);
             Controls.Add(showVIPmessiagelab);
             Controls.Add(tabControl1);
             Controls.Add(grpCart);
@@ -1494,6 +1913,18 @@ namespace BreakfastCart
             panel9.ResumeLayout(false);
             panel8.ResumeLayout(false);
             panel8.PerformLayout();
+            Tab_OrderCreate.ResumeLayout(false);
+            groupBox7.ResumeLayout(false);
+            groupBox7.PerformLayout();
+            panel20.ResumeLayout(false);
+            panel21.ResumeLayout(false);
+            panel21.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
+            panel19.ResumeLayout(false);
+            groupBox6.ResumeLayout(false);
+            groupBox6.PerformLayout();
+            groupBox5.ResumeLayout(false);
+            groupBox5.PerformLayout();
             Tab_Order.ResumeLayout(false);
             groupBox3.ResumeLayout(false);
             panel10.ResumeLayout(false);
@@ -1617,5 +2048,43 @@ namespace BreakfastCart
         private TextBox VIPIDtxt;
         private Label VIPlab;
         private Label showVIPmessiagelab;
+        private TabPage Tab_OrderCreate;
+        private GroupBox groupBox7;
+        private Panel panel20;
+        private Panel panel19;
+        private GroupBox groupBox6;
+        private GroupBox groupBox5;
+        private Button button3;
+        private Button button2;
+        private Button button1;
+        private DataGridView dataGridView1;
+        private Button button4;
+        private TextBox textBox3;
+        private Label label3;
+        private TextBox textBox2;
+        private Label label2;
+        private TextBox textBox1;
+        private Label label1;
+        private TextBox textBox9;
+        private Label label10;
+        private TextBox textBox8;
+        private Label label9;
+        private TextBox textBox6;
+        private Label label7;
+        private TextBox textBox5;
+        private Label label6;
+        private TextBox textBox4;
+        private Label label4;
+        private TextBox textBox10;
+        private Label label11;
+        private Panel panel21;
+        private TextBox textBox11;
+        private Label label12;
+        private TextBox textBox12;
+        private Label label13;
+        private TextBox textBox13;
+        private Label label14;
+        private TextBox textBox14;
+        private Label label15;
     }
 }
